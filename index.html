@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>El Nombre De La App_v 1.0.0_v 2.9.19_GPS</title>
+    <title>BusTalk_v 2.9.19_GPS</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -16,9 +16,9 @@
 
     <!-- MANIFEST PWA E ICONOS -->
     <link rel="manifest" href="./manifest.json">
-    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+    <link rel="apple-touch-icon" href="./icon-152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="./icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 
     <!-- METADATOS ESPECÍFICOS PARA APPLE iOS / iPadOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -131,7 +131,7 @@
         // medbasha
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(console.error);
+                navigator.serviceWorker.register('./sw.js').catch(console.error);
             });
         }
     </script>
@@ -168,7 +168,7 @@
         </div>
         <div class="flex gap-2">
             <button @click="cerrarTurno()" class="bg-red-600 text-white font-black px-4 py-2.5 rounded-lg text-sm uppercase shadow active:scale-95">Apagar</button>
-            <button @click="mostrarAvisoApagarRadio = false" class="bg-gray-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold active:scale-95"><i class="fas fa-times"></i></button>
+            <button @click="descartarAvisoManual()" class="bg-gray-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold active:scale-95"><i class="fas fa-times"></i></button>
         </div>
     </div>
 
@@ -189,25 +189,25 @@
                 </div>
             </div>
 
-            <!-- SELECTOR RÁPIDO SANT TOMÀS (L71 / L72) -->
+            <!-- SELECTOR RÁPIDO SANT TOMÀS (L71b / L72b) -->
             <template x-if="esTerminalTomas">
                 <div class="space-y-3 pt-2">
                     <p class="text-sm text-yellow-400 font-black uppercase tracking-wide">Selecciona línea de regreso:</p>
                     <div class="grid grid-cols-2 gap-3">
-                        <button @click="cambiarServicioTomas('L71')" class="py-4 bg-blue-700 active:bg-blue-800 text-white font-black text-sm rounded-2xl border-2 border-blue-400 shadow-md">L71 (Maó)</button>
-                        <button @click="cambiarServicioTomas('L72')" class="py-4 bg-emerald-700 active:bg-emerald-800 text-white font-black text-sm rounded-2xl border-2 border-emerald-400 shadow-md">L72 (Ciu)</button>
+                        <button @click="cambiarServicioTomas('L71b')" class="py-4 bg-blue-700 active:bg-blue-800 text-white font-black text-sm rounded-2xl border-2 border-blue-400 shadow-md">L71b (Maó)</button>
+                        <button @click="cambiarServicioTomas('L72b')" class="py-4 bg-emerald-700 active:bg-emerald-800 text-white font-black text-sm rounded-2xl border-2 border-emerald-400 shadow-md">L72b (Ciu)</button>
                     </div>
                 </div>
             </template>
 
-            <!-- SELECTOR DE ROTACIÓN RÁPIDA EN CALA GALDANA (L51 / L52 / L53) -->
+            <!-- SELECTOR DE ROTACIÓN RÁPIDA EN CALA GALDANA (L51b / L52b / L53b) -->
             <template x-if="esTerminalGaldana">
                 <div class="space-y-3 pt-2">
                     <p class="text-sm text-yellow-400 font-black uppercase tracking-wide">Selecciona línea de regreso:</p>
                     <div class="grid grid-cols-3 gap-2">
-                        <button @click="cambiarServicioGaldana('L51')" class="py-4 bg-blue-700 active:bg-blue-800 text-white font-black text-xs rounded-2xl border-2 border-blue-400 shadow-md">L51 (Maó)</button>
-                        <button @click="cambiarServicioGaldana('L52')" class="py-4 bg-emerald-700 active:bg-emerald-800 text-white font-black text-xs rounded-2xl border-2 border-emerald-400 shadow-md">L52 (Ciu)</button>
-                        <button @click="cambiarServicioGaldana('L53')" class="py-4 bg-amber-600 active:bg-amber-700 text-white font-black text-xs rounded-2xl border-2 border-amber-400 shadow-md">L53 (Ferr)</button>
+                        <button @click="cambiarServicioGaldana('L51b')" class="py-4 bg-blue-700 active:bg-blue-800 text-white font-black text-xs rounded-2xl border-2 border-blue-400 shadow-md">L51b (Maó)</button>
+                        <button @click="cambiarServicioGaldana('L52b')" class="py-4 bg-emerald-700 active:bg-emerald-800 text-white font-black text-xs rounded-2xl border-2 border-emerald-400 shadow-md">L52b (Ciu)</button>
+                        <button @click="cambiarServicioGaldana('L53b')" class="py-4 bg-amber-600 active:bg-amber-700 text-white font-black text-xs rounded-2xl border-2 border-amber-400 shadow-md">L53b (Ferr)</button>
                     </div>
                 </div>
             </template>
@@ -238,9 +238,9 @@
         <div class="bg-card p-8 rounded-[2rem] w-full max-w-sm text-center shadow-2xl border">
             <div class="text-yellow-500 text-6xl mb-4"><i class="fas fa-bus"></i><i class="fas fa-broadcast-tower text-3xl ml-2"></i></div>
             <h2 class="text-xl font-black mb-1 uppercase tracking-wider text-primary">BusTalk_v 2.9.19_GPS</h2>
-            <p class="mb-4 text-xs text-sub font-bold">Introduce tu servicio (ej. L01) o selecciona ruta.</p>
+            <p class="mb-4 text-xs text-sub font-bold">Introduce tu servicio (ej. L01a) o selecciona ruta.</p>
             
-            <input type="text" x-model="miBusInput" @input="procesarInputBus()" placeholder="Ej: L01" 
+            <input type="text" x-model="miBusInput" @input="procesarInputBus()" placeholder="Ej: L01a" 
                    class="w-full p-3.5 mb-3 rounded-2xl text-center text-xl font-black border-2 outline-none transition-colors bg-panel text-primary border-gray-400 focus:border-yellow-500 uppercase">
             
             <button @click="mostrarModalZonas = true" 
@@ -255,7 +255,7 @@
         </div>
     </div>
 
-    <!-- MODAL DESPLEGABLE DE ZONAS Y RUTAS -->
+    <!-- MODAL DESPLEGABLE DE ZONAS Y RUTAS (NOMENCLATURA a / b) -->
     <div x-show="mostrarModalZonas" x-cloak x-transition.opacity class="fixed inset-0 bg-black/90 z-[110] flex items-center justify-center p-4">
         <div class="bg-card rounded-[2rem] p-6 w-full max-w-sm border max-h-[85vh] flex flex-col">
             <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-700">
@@ -266,28 +266,30 @@
             </div>
 
             <div class="space-y-4 overflow-y-auto hide-scrollbar flex-1 pr-1">
+                <!-- RUTAS PRINCIPALES Y EXPRÉS -->
                 <div class="bg-panel rounded-xl p-3 border border-gray-400">
-                    <p class="text-base uppercase font-black text-amber-600 mb-3 tracking-wider">Rutas Principales</p>
+                    <p class="text-base uppercase font-black text-amber-600 mb-3 tracking-wider">Rutas Principales y Exprés</p>
                     <div class="space-y-2">
-                        <button @click="seleccionarLineaModal('L01 (Ciu - Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L01 (Ciu - Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>Línea 01 (Ciu - Maó)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L01 (Ciu - Maó)'"></i>
+                        <button @click="seleccionarLineaModal('L01a (Maó ➔ Ciu)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L01a (Maó ➔ Ciu)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>🔴 L01a (Maó ➔ Ciu)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L01a (Maó ➔ Ciu)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L01 (Maó - Ciu)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L01 (Maó - Ciu)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>Línea 01 (Maó - Ciu)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L01 (Maó - Ciu)'"></i>
+                        <button @click="seleccionarLineaModal('L01b (Ciu ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L01b (Ciu ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>🟡 L01b (Ciu ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L01b (Ciu ➔ Maó)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L14 Exprés (Ciu - Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L14 Exprés (Ciu - Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>Línea 14 Exprés (Ciu - Maó)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L14 Exprés (Ciu - Maó)'"></i>
+                        <button @click="seleccionarLineaModal('L14a Exprés (Maó ➔ Ciu)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L14a Exprés (Maó ➔ Ciu)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L14a Exprés (Maó ➔ Ciu)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L14a Exprés (Maó ➔ Ciu)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L14 Exprés (Maó - Ciu)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L14 Exprés (Maó - Ciu)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>Línea 14 Exprés (Maó - Ciu)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L14 Exprés (Maó - Ciu)'"></i>
+                        <button @click="seleccionarLineaModal('L14b Exprés (Ciu ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L14b Exprés (Ciu ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L14b Exprés (Ciu ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L14b Exprés (Ciu ➔ Maó)'"></i>
                         </button>
                     </div>
                 </div>
 
+                <!-- ZONA CENTRO Y PONIENTE -->
                 <div class="bg-panel rounded-xl p-3 border border-gray-400">
                     <button @click="abrirPoniente = !abrirPoniente" class="w-full flex justify-between items-center text-base uppercase font-black text-sky-600 tracking-wider">
                         <span>🟠 Zona Centro y Poniente</span>
@@ -295,29 +297,53 @@
                     </button>
                     
                     <div x-show="abrirPoniente" x-transition class="space-y-2 mt-3 pt-3 border-t border-gray-400">
-                        <button @click="seleccionarLineaModal('L52 (Ciu - Galdana)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L52 (Ciu - Galdana)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L52 (Ciu - Galdana)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L52 (Ciu - Galdana)'"></i>
+                        <button @click="seleccionarLineaModal('L52a (Ciu ➔ Galdana)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L52a (Ciu ➔ Galdana)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L52a (Ciu ➔ Galdana)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L52a (Ciu ➔ Galdana)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L51 (Maó - Galdana)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L51 (Maó - Galdana)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L51 (Maó - Galdana)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L51 (Maó - Galdana)'"></i>
+                        <button @click="seleccionarLineaModal('L52b (Galdana ➔ Ciu)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L52b (Galdana ➔ Ciu)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L52b (Galdana ➔ Ciu)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L52b (Galdana ➔ Ciu)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L53 (Ferreries - Galdana)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L53 (Ferreries - Galdana)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L53 Lanzadera (Ferreries - Galdana)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L53 (Ferreries - Galdana)'"></i>
+                        <button @click="seleccionarLineaModal('L51a (Maó ➔ Galdana)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L51a (Maó ➔ Galdana)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L51a (Maó ➔ Galdana)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L51a (Maó ➔ Galdana)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L72 (Ciu - S. Tomàs)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L72 (Ciu - S. Tomàs)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L72 (Ciu - Sant Tomàs)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L72 (Ciu - S. Tomàs)'"></i>
+                        <button @click="seleccionarLineaModal('L51b (Galdana ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L51b (Galdana ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L51b (Galdana ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L51b (Galdana ➔ Maó)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L71 (Maó - S. Tomàs)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L71 (Maó - S. Tomàs)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L71 (Maó - Sant Tomàs)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L71 (Maó - S. Tomàs)'"></i>
+                        <button @click="seleccionarLineaModal('L53a (Ferr ➔ Galdana)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L53a (Ferr ➔ Galdana)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L53a (Ferreries ➔ Galdana)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L53a (Ferr ➔ Galdana)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L32 (Maó - Son Bou)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L32 (Maó - Son Bou)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L32 (Maó - Son Bou)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L32 (Maó - Son Bou)'"></i>
+                        <button @click="seleccionarLineaModal('L53b (Galdana ➔ Ferr)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L53b (Galdana ➔ Ferr)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L53b (Galdana ➔ Ferreries)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L53b (Galdana ➔ Ferr)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L72a (Ciu ➔ S. Tomàs)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L72a (Ciu ➔ S. Tomàs)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L72a (Ciu ➔ Sant Tomàs)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L72a (Ciu ➔ S. Tomàs)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L72b (S. Tomàs ➔ Ciu)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L72b (S. Tomàs ➔ Ciu)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L72b (Sant Tomàs ➔ Ciu)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L72b (S. Tomàs ➔ Ciu)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L71a (Maó ➔ S. Tomàs)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L71a (Maó ➔ S. Tomàs)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L71a (Maó ➔ Sant Tomàs)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L71a (Maó ➔ S. Tomàs)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L71b (S. Tomàs ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L71b (S. Tomàs ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L71b (Sant Tomàs ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L71b (S. Tomàs ➔ Maó)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L32a (Maó ➔ Son Bou)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L32a (Maó ➔ Son Bou)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L32a (Maó ➔ Son Bou)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L32a (Maó ➔ Son Bou)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L32b (Son Bou ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L32b (Son Bou ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L32b (Son Bou ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L32b (Son Bou ➔ Maó)'"></i>
                         </button>
                         <button @click="seleccionarLineaModal('Zona Centro y Poniente')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'Zona Centro y Poniente' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
                             <span>Genérico Centro/Poniente</span>
@@ -326,6 +352,7 @@
                     </div>
                 </div>
 
+                <!-- ZONA MAÓ Y LEVANTE -->
                 <div class="bg-panel rounded-xl p-3 border border-gray-400">
                     <button @click="abrirLevante = !abrirLevante" class="w-full flex justify-between items-center text-base uppercase font-black text-blue-600 tracking-wider">
                         <span>🔵 Zona Maó y Levante</span>
@@ -333,41 +360,77 @@
                     </button>
                     
                     <div x-show="abrirLevante" x-transition class="space-y-2 mt-3 pt-3 border-t border-gray-400">
-                        <button @click="seleccionarLineaModal('L02 (Maó - Castell)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L02 (Maó - Castell)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L02 (Maó - Es Castell)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L02 (Maó - Castell)'"></i>
+                        <button @click="seleccionarLineaModal('L02a (Maó ➔ Castell)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L02a (Maó ➔ Castell)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L02a (Maó ➔ Es Castell)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L02a (Maó ➔ Castell)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L03 (Maó - S. Lluís)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L03 (Maó - S. Lluís)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L03 (Maó - Sant Lluís)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L03 (Maó - S. Lluís)'"></i>
+                        <button @click="seleccionarLineaModal('L02b (Castell ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L02b (Castell ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L02b (Es Castell ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L02b (Castell ➔ Maó)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L21 (Maó - S. Climent)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L21 (Maó - S. Climent)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L21 (Maó - Sant Climent)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L21 (Maó - S. Climent)'"></i>
+                        <button @click="seleccionarLineaModal('L03a (Maó ➔ S. Lluís)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L03a (Maó ➔ S. Lluís)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L03a (Maó ➔ Sant Lluís)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L03a (Maó ➔ S. Lluís)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L22 (Maó - Canutells)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L22 (Maó - Canutells)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L22 (Maó - Es Canutells)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L22 (Maó - Canutells)'"></i>
+                        <button @click="seleccionarLineaModal('L03b (S. Lluís ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L03b (S. Lluís ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L03b (Sant Lluís ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L03b (S. Lluís ➔ Maó)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L31 (Maó - C. Porter)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L31 (Maó - C. Porter)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L31 (Maó - Alaior - C. Porter)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L31 (Maó - C. Porter)'"></i>
+                        <button @click="seleccionarLineaModal('L21a (Maó ➔ S. Climent)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L21a (Maó ➔ S. Climent)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L21a (Maó ➔ Sant Climent)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L21a (Maó ➔ S. Climent)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L08 (Maó - C. Porter)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L08 (Maó - C. Porter)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L08 (Maó - Directo C. Porter)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L08 (Maó - C. Porter)'"></i>
+                        <button @click="seleccionarLineaModal('L21b (S. Climent ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L21b (S. Climent ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L21b (Sant Climent ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L21b (S. Climent ➔ Maó)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L91 (Maó - S\'Algar)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L91 (Maó - S\'Algar)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L91 (Maó - S'Algar - Alcaufar)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L91 (Maó - S\'Algar)'"></i>
+                        <button @click="seleccionarLineaModal('L22a (Maó ➔ Canutells)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L22a (Maó ➔ Canutells)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L22a (Maó ➔ Es Canutells)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L22a (Maó ➔ Canutells)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L92 (Maó - P. Prima)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L92 (Maó - P. Prima)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L92 (Maó - Punta Prima)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L92 (Maó - P. Prima)'"></i>
+                        <button @click="seleccionarLineaModal('L22b (Canutells ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L22b (Canutells ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L22b (Es Canutells ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L22b (Canutells ➔ Maó)'"></i>
                         </button>
-                        <button @click="seleccionarLineaModal('L93 (Maó - Binibèquer)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L93 (Maó - Binibèquer)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
-                            <span>L93 (Maó - Binibèquer)</span>
-                            <i class="fas fa-check" x-show="miLineaInput === 'L93 (Maó - Binibèquer)'"></i>
+                        <button @click="seleccionarLineaModal('L31a (Maó ➔ C. Porter)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L31a (Maó ➔ C. Porter)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L31a (Maó ➔ Alaior ➔ C. Porter)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L31a (Maó ➔ C. Porter)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L31b (C. Porter ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L31b (C. Porter ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L31b (C. Porter ➔ Alaior ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L31b (C. Porter ➔ Maó)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L08a (Maó ➔ C. Porter)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L08a (Maó ➔ C. Porter)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L08a (Maó ➔ Directo C. Porter)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L08a (Maó ➔ C. Porter)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L08b (C. Porter ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L08b (C. Porter ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L08b (Directo C. Porter ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L08b (C. Porter ➔ Maó)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L91a (Maó ➔ S\'Algar)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L91a (Maó ➔ S\'Algar)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L91a (Maó ➔ S'Algar ➔ Alcaufar)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L91a (Maó ➔ S\'Algar)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L91b (Alcaufar ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L91b (Alcaufar ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L91b (Alcaufar ➔ S'Algar ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L91b (Alcaufar ➔ Maó)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L92a (Maó ➔ P. Prima)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L92a (Maó ➔ P. Prima)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L92a (Maó ➔ Punta Prima)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L92a (Maó ➔ P. Prima)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L92b (P. Prima ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L92b (P. Prima ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L92b (Punta Prima ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L92b (P. Prima ➔ Maó)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L93a (Maó ➔ Binibèquer)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L93a (Maó ➔ Binibèquer)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L93a (Maó ➔ Binibèquer)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L93a (Maó ➔ Binibèquer)'"></i>
+                        </button>
+                        <button @click="seleccionarLineaModal('L93b (Binibèquer ➔ Maó)')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'L93b (Binibèquer ➔ Maó)' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
+                            <span>L93b (Binibèquer ➔ Maó)</span>
+                            <i class="fas fa-check" x-show="miLineaInput === 'L93b (Binibèquer ➔ Maó)'"></i>
                         </button>
                         <button @click="seleccionarLineaModal('Zona Maó y Levante')" class="w-full text-left p-3 rounded-xl text-lg font-bold transition-colors flex justify-between items-center" :class="miLineaInput === 'Zona Maó y Levante' ? 'bg-yellow-500 text-black font-black' : 'bg-card text-primary'">
                             <span>Genérico Maó / Levante</span>
@@ -397,10 +460,11 @@
         </div>
     </div>
 
-    <!-- CABECERA PRINCIPAL LIMPIA -->
+    <!-- CABECERA PRINCIPAL LIMPIA SIN SELLO -->
     <header class="p-2.5 bg-panel flex justify-between items-center border-b z-10 shadow-sm flex-shrink-0">
         <div class="flex flex-col min-w-0 flex-1 mr-2">
             <div class="flex items-center space-x-2">
+                <!-- RECUADRO AMARILLO DINÁMICO DE LÍNEA (MUESTRA p.ej. L01a o L01b) -->
                 <span class="bg-yellow-500 text-black font-black px-2.5 py-1 rounded-lg text-base flex-shrink-0 shadow-sm" x-text="obtenerCodigoLineaActual()"></span>
                 <h1 class="text-lg font-black tracking-tighter italic text-primary flex-shrink-0">Bus<span class="text-amber-600">Talk</span> <span class="text-[9px] bg-green-700 text-white px-1 py-0.5 rounded ml-1 not-italic font-mono">v2.9.19</span></h1>
             </div>
@@ -460,6 +524,7 @@
                     <div class="flex-1 overflow-hidden pr-1">
                         <div class="flex items-center gap-2 mb-1">
                             <p class="font-black text-2xl text-primary" x-text="comp.id"></p>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-panel text-amber-500 border border-amber-500/30" x-text="comp.linea ? comp.linea.split(' ')[0] : ''"></span>
                             <i x-show="comp.id === elQueHabla" class="fas fa-volume-up text-green-600 animate-pulse text-xl ml-1"></i>
                             <span x-show="comp.alerta" class="px-2 py-0.5 bg-black/80 text-white rounded text-xs font-black uppercase tracking-widest border border-white/20">
                                 <i class="fas fa-exclamation-triangle text-yellow-400 mr-1"></i><span x-text="comp.alerta"></span>
@@ -512,7 +577,7 @@
             </template>
         </main>
 
-        <!-- PANEL DE CONTROL DEL CONDUCTOR -->
+        <!-- PANEL DE CONTROL DEL CONDUCTOR CON EMBLEMA REUBICADO ABAJO -->
         <footer class="p-3 bg-panel rounded-t-[2.2rem] landscape-controls shadow-[0_-8px_30px_rgba(0,0,0,0.15)] border-t relative z-20 flex-shrink-0">
             <div class="flex flex-col items-center max-w-md mx-auto">
                 
@@ -571,7 +636,7 @@
                         <button @mousedown="iniciarPax(-1)" @mouseup="pararPax()" @mouseleave="pararPax()" @touchstart.prevent="iniciarPax(-1)" @touchend.prevent="pararPax()" 
                                 class="w-12 h-16 rounded-xl bg-panel text-2xl flex items-center justify-center active:bg-red-500 transition-colors text-primary border shadow-sm">-</button>
                         <div class="text-center flex-1">
-                            <p class="text-[9px] uppercase tracking-widest text-sub">PAX</p>
+                            <p class="text-[9px] uppercase font-black tracking-widest text-sub">PAX</p>
                             <p :class="obtenerColorPax(miPax)" x-text="miPax"></p>
                         </div>
                         <button @mousedown="iniciarPax(1)" @mouseup="pararPax()" @mouseleave="pararPax()" @touchstart.prevent="iniciarPax(1)" @touchend.prevent="pararPax()" 
@@ -618,7 +683,7 @@
                     </button>
                 </div>
 
-                <!-- EMBLEMA CON SELLO DISIMULADO (medbasha) -->
+                <!-- EMBLEMA REUBICADO ABAJO CON EL SELLO DISIMULADO (medbasha) -->
                 <div class="flex items-center gap-1.5 border border-gray-700/60 px-2.5 py-1 rounded-full bg-card/80 mt-1">
                     <svg width="12" height="12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <polygon points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" stroke="#facc15" stroke-width="8" fill="#121212" />
@@ -700,7 +765,7 @@
                 compañeros:[], misParadasArray:[],
                 mostrarModalZonas: false, mostrarModalResumen: false, esTerminalGaldana: false, esTerminalTomas: false,
                 abrirPoniente: false, abrirLevante: false,
-                modoColor: 'noche', mostrarAvisoApagarRadio: false, mostrarAvisoFinalRuta: false,
+                modoColor: 'noche', mostrarAvisoApagarRadio: false, avisoDescartadoManualEstado: false, mostrarAvisoFinalRuta: false,
                 
                 ultimaActividadTimestamp: Date.now(),
                 intervaloWatchdogInactividad: null,
@@ -745,7 +810,7 @@
                 ultimoAvisoParadaSegs: 0,
 
                 async init() {
-                    if (navigator.storage && navigator.storage.persist) {
+                    if (navigator.storage && navigator.storagepersist) {
                         await navigator.storage.persist();
                     }
 
@@ -798,7 +863,7 @@
                             let esExtremo = (idx === 0 || idx === this.misParadasArray.length - 1);
 
                             if (esExtremo) {
-                                if (this.segundosEnParadaActual >= 180 && !this.mostrarAvisoApagarRadio && !this.mostrarAvisoFinalRuta) {
+                                if (this.segundosEnParadaActual >= 180 && !this.mostrarAvisoApagarRadio && !this.avisoDescartadoManualEstado && !this.mostrarAvisoFinalRuta) {
                                     this.mostrarAvisoApagarRadio = true;
                                     this.playAudioAviso('cierre_mic');
                                 }
@@ -828,11 +893,18 @@
                     this.iniciarGPSGeofencing();
                 },
 
+                // EXTRACCIÓN DINÁMICA DE CÓDIGO CON SUFIJO (p.ej. L01a, L01b, L52a)
                 obtenerCodigoLineaActual() {
                     if (!this.miLinea) return this.miBus || 'BUS';
-                    let match = this.miLinea.match(/^(L\d+)/i);
+                    let match = this.miLinea.match(/^(L\d+[ab]?)/i);
                     if (match) return match[1].toUpperCase();
                     return this.miBus || 'BUS';
+                },
+
+                descartarAvisoManual() {
+                    this.registrarActividad();
+                    this.mostrarAvisoApagarRadio = false;
+                    this.avisoDescartadoManualEstado = true;
                 },
 
                 registrarActividad() {
@@ -930,23 +1002,25 @@
                     if (!txt) return;
 
                     const mapaServicios = {
-                        "L01": "L01 (Ciu - Maó)", "L1": "L01 (Ciu - Maó)",
-                        "L14": "L14 Exprés (Ciu - Maó)",
-                        "L02": "L02 (Maó - Castell)", "L2": "L02 (Maó - Castell)",
-                        "L03": "L03 (Maó - S. Lluís)", "L3": "L03 (Maó - S. Lluís)",
-                        "L21": "L21 (Maó - S. Climent)",
-                        "L22": "L22 (Maó - Canutells)",
-                        "L31": "L31 (Maó - C. Porter)",
-                        "L08": "L08 (Maó - C. Porter)", "L8": "L08 (Maó - C. Porter)",
-                        "L91": "L91 (Maó - S'Algar)",
-                        "L92": "L92 (Maó - P. Prima)",
-                        "L93": "L93 (Maó - Binibèquer)",
-                        "L71": "L71 (Maó - S. Tomàs)",
-                        "L72": "L72 (Ciu - S. Tomàs)",
-                        "L51": "L51 (Maó - Galdana)",
-                        "L52": "L52 (Ciu - Galdana)",
-                        "L53": "L53 (Ferreries - Galdana)",
-                        "L32": "L32 (Maó - Son Bou)"
+                        "L01A": "L01a (Maó ➔ Ciu)", "L1A": "L01a (Maó ➔ Ciu)",
+                        "L01B": "L01b (Ciu ➔ Maó)", "L1B": "L01b (Ciu ➔ Maó)",
+                        "L01": "L01a (Maó ➔ Ciu)", "L1": "L01a (Maó ➔ Ciu)",
+                        "L14A": "L14a Exprés (Maó ➔ Ciu)", "L14B": "L14b Exprés (Ciu ➔ Maó)", "L14": "L14a Exprés (Maó ➔ Ciu)",
+                        "L02A": "L02a (Maó ➔ Castell)", "L02B": "L02b (Castell ➔ Maó)",
+                        "L03A": "L03a (Maó ➔ S. Lluís)", "L03B": "L03b (S. Lluís ➔ Maó)",
+                        "L21A": "L21a (Maó ➔ S. Climent)", "L21B": "L21b (S. Climent ➔ Maó)",
+                        "L22A": "L22a (Maó ➔ Canutells)", "L22B": "L22b (Canutells ➔ Maó)",
+                        "L31A": "L31a (Maó ➔ C. Porter)", "L31B": "L31b (C. Porter ➔ Maó)",
+                        "L08A": "L08a (Maó ➔ C. Porter)", "L08B": "L08b (C. Porter ➔ Maó)",
+                        "L91A": "L91a (Maó ➔ S'Algar)", "L91B": "L91b (Alcaufar ➔ Maó)",
+                        "L92A": "L92a (Maó ➔ P. Prima)", "L92B": "L92b (P. Prima ➔ Maó)",
+                        "L93A": "L93a (Maó ➔ Binibèquer)", "L93B": "L93b (Binibèquer ➔ Maó)",
+                        "L71A": "L71a (Maó ➔ S. Tomàs)", "L71B": "L71b (S. Tomàs ➔ Maó)",
+                        "L72A": "L72a (Ciu ➔ S. Tomàs)", "L72B": "L72b (S. Tomàs ➔ Ciu)",
+                        "L51A": "L51a (Maó ➔ Galdana)", "L51B": "L51b (Galdana ➔ Maó)",
+                        "L52A": "L52a (Ciu ➔ Galdana)", "L52B": "L52b (Galdana ➔ Ciu)",
+                        "L53A": "L53a (Ferr ➔ Galdana)", "L53B": "L53b (Galdana ➔ Ferr)",
+                        "L32A": "L32a (Maó ➔ Son Bou)", "L32B": "L32b (Son Bou ➔ Maó)"
                     };
 
                     const limpia = txt.replace(/\s+/g, '');
@@ -963,35 +1037,39 @@
                     this.mostrarModalZonas = false;
 
                     const mapaInverso = {
-                        "L01 (Ciu - Maó)": "L01",
-                        "L01 (Maó - Ciu)": "L01",
-                        "L14 Exprés (Ciu - Maó)": "L14",
-                        "L14 Exprés (Maó - Ciu)": "L14",
-                        "L02 (Maó - Castell)": "L02",
-                        "L03 (Maó - S. Lluís)": "L03",
-                        "L21 (Maó - S. Climent)": "L21",
-                        "L22 (Maó - Canutells)": "L22",
-                        "L31 (Maó - C. Porter)": "L31",
-                        "L08 (Maó - C. Porter)": "L08",
-                        "L91 (Maó - S'Algar)": "L91",
-                        "L92 (Maó - P. Prima)": "L92",
-                        "L93 (Maó - Binibèquer)": "L93",
-                        "L71 (Maó - S. Tomàs)": "L71",
-                        "L72 (Ciu - S. Tomàs)": "L72",
-                        "L51 (Maó - Galdana)": "L51",
-                        "L52 (Ciu - Galdana)": "L52",
-                        "L53 (Ferreries - Galdana)": "L53",
-                        "L32 (Maó - Son Bou)": "L32"
+                        "L01a (Maó ➔ Ciu)": "L01a", "L01b (Ciu ➔ Maó)": "L01b",
+                        "L14a Exprés (Maó ➔ Ciu)": "L14a", "L14b Exprés (Ciu ➔ Maó)": "L14b",
+                        "L02a (Maó ➔ Castell)": "L02a", "L02b (Castell ➔ Maó)": "L02b",
+                        "L03a (Maó ➔ S. Lluís)": "L03a", "L03b (S. Lluís ➔ Maó)": "L03b",
+                        "L21a (Maó ➔ S. Climent)": "L21a", "L21b (S. Climent ➔ Maó)": "L21b",
+                        "L22a (Maó ➔ Canutells)": "L22a", "L22b (Canutells ➔ Maó)": "L22b",
+                        "L31a (Maó ➔ C. Porter)": "L31a", "L31b (C. Porter ➔ Maó)": "L31b",
+                        "L08a (Maó ➔ C. Porter)": "L08a", "L08b (C. Porter ➔ Maó)": "L08b",
+                        "L91a (Maó ➔ S'Algar)": "L91a", "L91b (Alcaufar ➔ Maó)": "L91b",
+                        "L92a (Maó ➔ P. Prima)": "L92a", "L92b (P. Prima ➔ Maó)": "L92b",
+                        "L93a (Maó ➔ Binibèquer)": "L93a", "L93b (Binibèquer ➔ Maó)": "L93b",
+                        "L71a (Maó ➔ S. Tomàs)": "L71a", "L71b (S. Tomàs ➔ Maó)": "L71b",
+                        "L72a (Ciu ➔ S. Tomàs)": "L72a", "L72b (S. Tomàs ➔ Ciu)": "L72b",
+                        "L51a (Maó ➔ Galdana)": "L51a", "L51b (Galdana ➔ Maó)": "L51b",
+                        "L52a (Ciu ➔ Galdana)": "L52a", "L52b (Galdana ➔ Ciu)": "L52b",
+                        "L53a (Ferr ➔ Galdana)": "L53a", "L53b (Galdana ➔ Ferr)": "L53b",
+                        "L32a (Maó ➔ Son Bou)": "L32a", "L32b (Son Bou ➔ Maó)": "L32b"
                     };
 
                     if (mapaInverso[linea]) {
                         this.miBusInput = mapaInverso[linea];
                     }
+
+                    if (this.sesionIniciada) {
+                        this.cargarParadas();
+                        this.reiniciarEscuchasFirebase();
+                        this.actualizarMiEstadoBD();
+                    }
                 },
 
                 limpiarSesionEnBD() {
                     if (this.miBus) {
-                        db.collection("bustalk_buses").doc(this.miBus).delete();
+                        db.collection("bustalk_buses").doc(this.miBus).delete().catch(() => {});
                     }
                 },
 
@@ -1042,42 +1120,57 @@
 
                 cargarParadas() {
                     const diccionario = {
-                        "L01 (Ciu - Maó)": ["Ciu", "Ferr", "Mer", "Alaior C.", "Alaior P.", "Argen", "Maó"],
-                        "L01 (Maó - Ciu)": ["Maó", "Argen", "Alaior P.", "Alaior C.", "Mer", "Ferr", "Ciu"],
-                        "L14 Exprés (Ciu - Maó)": ["Ciu", "Maó"],
-                        "L14 Exprés (Maó - Ciu)": ["Maó", "Ciu"],
-                        "L02 (Maó - Castell)": ["Maó", "Fontanilles", "Castell"],
-                        "L03 (Maó - S. Lluís)": ["Maó", "H. Mateu Orfila", "S. Lluís"],
-                        "L21 (Maó - S. Climent)": ["Maó", "S. Climent"],
-                        "L22 (Maó - Canutells)": ["Maó", "S. Climent", "Canutells"],
-                        "L31 (Maó - C. Porter)": ["Maó", "Alaior P.", "Alaior C.", "C. Porter"],
-                        "L08 (Maó - C. Porter)": ["Maó", "S. Climent", "C. Porter"],
-                        "L91 (Maó - S'Algar)": ["Maó", "S. Lluís", "S'Algar", "Alcaufar"],
-                        "L92 (Maó - P. Prima)": ["Maó", "S. Lluís", "P. Prima"],
-                        "L93 (Maó - Binibèquer)": ["Maó", "S. Lluís", "Binibèquer"],
-                        "L52 (Ciu - Galdana)": ["Ciu", "Ferr", "Cementerio", "Camping", "C. Mitjana", "Galdana"],
-                        "L51 (Maó - Galdana)": ["Maó", "Argen", "Alaior P.", "Alaior C.", "Mer", "Ferr", "Cementerio", "Camping", "C. Mitjana", "Galdana"],
-                        "L53 (Ferreries - Galdana)": ["Ferr", "Cementerio", "Camping", "C. Mitjana", "Galdana"],
-                        "L72 (Ciu - S. Tomàs)": ["Ciu", "Ferr", "Mer", "Migjorn", "S. Tomàs 1ª", "S. Tomàs 2ª", "S. Tomàs 3ª"],
-                        "L71 (Maó - S. Tomàs)": ["Maó", "Argen", "Alaior P.", "Alaior C.", "Migjorn", "S. Tomàs 1ª", "S. Tomàs 2ª", "S. Tomàs 3ª"],
-                        "L32 (Maó - Son Bou)": ["Maó", "Argen", "Alaior P.", "Alaior C.", "Son Bou"],
+                        "L01a (Maó ➔ Ciu)": ["Maó", "Argen", "Alaior P.", "Alaior C.", "Mer", "Ferr", "Ciu"],
+                        "L01b (Ciu ➔ Maó)": ["Ciu", "Ferr", "Mer", "Alaior C.", "Alaior P.", "Argen", "Maó"],
+                        "L14a Exprés (Maó ➔ Ciu)": ["Maó", "Ciu"],
+                        "L14b Exprés (Ciu ➔ Maó)": ["Ciu", "Maó"],
+                        "L02a (Maó ➔ Castell)": ["Maó", "Fontanilles", "Castell"],
+                        "L02b (Castell ➔ Maó)": ["Castell", "Fontanilles", "Maó"],
+                        "L03a (Maó ➔ S. Lluís)": ["Maó", "H. Mateu Orfila", "S. Lluís"],
+                        "L03b (S. Lluís ➔ Maó)": ["S. Lluís", "H. Mateu Orfila", "Maó"],
+                        "L21a (Maó ➔ S. Climent)": ["Maó", "S. Climent"],
+                        "L21b (S. Climent ➔ Maó)": ["S. Climent", "Maó"],
+                        "L22a (Maó ➔ Canutells)": ["Maó", "S. Climent", "Canutells"],
+                        "L22b (Canutells ➔ Maó)": ["Canutells", "S. Climent", "Maó"],
+                        "L31a (Maó ➔ C. Porter)": ["Maó", "Alaior P.", "Alaior C.", "C. Porter"],
+                        "L31b (C. Porter ➔ Maó)": ["C. Porter", "Alaior C.", "Alaior P.", "Maó"],
+                        "L08a (Maó ➔ C. Porter)": ["Maó", "S. Climent", "C. Porter"],
+                        "L08b (C. Porter ➔ Maó)": ["C. Porter", "S. Climent", "Maó"],
+                        "L91a (Maó ➔ S'Algar)": ["Maó", "S. Lluís", "S'Algar", "Alcaufar"],
+                        "L91b (Alcaufar ➔ Maó)": ["Alcaufar", "S'Algar", "S. Lluís", "Maó"],
+                        "L92a (Maó ➔ P. Prima)": ["Maó", "S. Lluís", "P. Prima"],
+                        "L92b (P. Prima ➔ Maó)": ["P. Prima", "S. Lluís", "Maó"],
+                        "L93a (Maó ➔ Binibèquer)": ["Maó", "S. Lluís", "Binibèquer"],
+                        "L93b (Binibèquer ➔ Maó)": ["Binibèquer", "S. Lluís", "Maó"],
+                        "L52a (Ciu ➔ Galdana)": ["Ciu", "Ferr", "Cementerio", "Camping", "C. Mitjana", "Galdana"],
+                        "L52b (Galdana ➔ Ciu)": ["Galdana", "C. Mitjana", "Camping", "Cementerio", "Ferr", "Ciu"],
+                        "L51a (Maó ➔ Galdana)": ["Maó", "Argen", "Alaior P.", "Alaior C.", "Mer", "Ferr", "Cementerio", "Camping", "C. Mitjana", "Galdana"],
+                        "L51b (Galdana ➔ Maó)": ["Galdana", "C. Mitjana", "Camping", "Cementerio", "Ferr", "Mer", "Alaior C.", "Alaior P.", "Argen", "Maó"],
+                        "L53a (Ferr ➔ Galdana)": ["Ferr", "Cementerio", "Camping", "C. Mitjana", "Galdana"],
+                        "L53b (Galdana ➔ Ferr)": ["Galdana", "C. Mitjana", "Camping", "Cementerio", "Ferr"],
+                        "L72a (Ciu ➔ S. Tomàs)": ["Ciu", "Ferr", "Mer", "Migjorn", "S. Tomàs 1ª", "S. Tomàs 2ª", "S. Tomàs 3ª"],
+                        "L72b (S. Tomàs ➔ Ciu)": ["S. Tomàs 1ª", "S. Tomàs 2ª", "S. Tomàs 3ª", "Migjorn", "Mer", "Ferr", "Ciu"],
+                        "L71a (Maó ➔ S. Tomàs)": ["Maó", "Argen", "Alaior P.", "Alaior C.", "Migjorn", "S. Tomàs 1ª", "S. Tomàs 2ª", "S. Tomàs 3ª"],
+                        "L71b (S. Tomàs ➔ Maó)": ["S. Tomàs 1ª", "S. Tomàs 2ª", "S. Tomàs 3ª", "Migjorn", "Alaior C.", "Alaior P.", "Argen", "Maó"],
+                        "L32a (Maó ➔ Son Bou)": ["Maó", "Argen", "Alaior P.", "Alaior C.", "Son Bou"],
+                        "L32b (Son Bou ➔ Maó)": ["Son Bou", "Alaior C.", "Alaior P.", "Argen", "Maó"],
                         "Zona Maó y Levante": ["Maó", "Castell", "S.Lluís", "P.Prima", "S'Algar", "Canutells", "Mesquida", "C.Porter", "Binisafúller", "Binibèquer", "Alcaufar", "Trebalúger", "Bintaufa", "S.Climent"],
                         "Zona Centro y Poniente": ["Ciu", "Ferr", "Mer", "Alaior C.", "Migjorn", "S. Tomàs 1ª", "Son Bou", "Galdana"]
                     };
-                    let paradas = diccionario[this.miLinea] || ["Ciu", "Ferr", "Mer", "Alaior C.", "Alaior P.", "Argen", "Maó"];
+                    let paradas = diccionario[this.miLinea] || ["Maó", "Argen", "Alaior P.", "Alaior C.", "Mer", "Ferr", "Ciu"];
                     this.misParadasArray = paradas;
                     this.miUbicacion = paradas[0];
                     this.evaluarSentidoIda();
                 },
 
                 evaluarSentidoIda() {
-                    if (this.misParadasArray.length > 0) {
+                    if (this.miLinea.includes('a (')) {
+                        this.esSentidoIda = true;
+                    } else if (this.miLinea.includes('b (')) {
+                        this.esSentidoIda = false;
+                    } else if (this.misParadasArray.length > 0) {
                         const origen = this.misParadasArray[0];
-                        if (origen === 'Maó' || origen.includes('Maó')) {
-                            this.esSentidoIda = true;
-                        } else {
-                            this.esSentidoIda = false;
-                        }
+                        this.esSentidoIda = (origen === 'Maó' || origen.includes('Maó'));
                     }
                 },
 
@@ -1107,34 +1200,42 @@
                     return tiempos[`${origen}-${destino}`] || 10;
                 },
 
-                // LÓGICA DE ZONAS CORREGIDA AL 100% (L01 PERTENECE A CENTRO/PONIENTE, SOLO L14 QUEDA AISLADA)
+                // INTERCONEXIÓN DE ZONA QUE RECONOCE LÍNEAS CON SUFIJOS a Y b
                 esMismaZona(lineaA, lineaB) {
                     if (!lineaA || !lineaB) return false;
                     if (lineaA === 'General' || lineaB === 'General') return true;
-
-                    // L14 EXPRÉS TOTALMENTE ISLADA (Solo se conecta con otra L14)
+                    
+                    // L14 EXPRÉS CANAL AISLADO (L14a y L14b)
                     const esL14_A = lineaA.includes('L14');
                     const esL14_B = lineaB.includes('L14');
                     if (esL14_A || esL14_B) {
                         return esL14_A && esL14_B;
                     }
 
-                    // GRUPO CENTRO Y PONIENTE (INCLUYE L01 EN AMBOS SENTIDOS + L51, L52, L53, L71, L72, L32)
-                    const prefijosPoniente = ["L01", "L51", "L52", "L53", "L71", "L72", "L32", "Zona Centro y Poniente"];
+                    if (lineaA === lineaB) return true;
                     
-                    const esPonienteA = prefijosPoniente.some(p => lineaA.toUpperCase().includes(p));
-                    const esPonienteB = prefijosPoniente.some(p => lineaB.toUpperCase().includes(p));
-
-                    if (esPonienteA && esPonienteB) return true;
-
-                    // GRUPO MAÓ Y LEVANTE (L02, L03, L21, L22, L31, L08, L91, L92, L93)
-                    const prefijosLevante = ["L02", "L03", "L21", "L22", "L31", "L08", "L91", "L92", "L93", "Zona Maó y Levante"];
+                    // ZONA CENTRO Y PONIENTE (Acepta L01a, L01b, L51a, L51b, L52a, L52b, etc.)
+                    const poniente = [
+                        "Zona Centro y Poniente", 
+                        "L01a", "L01b", "L01", "L1",
+                        "L52a", "L52b", "L51a", "L51b", "L53a", "L53b", 
+                        "L72a", "L72b", "L71a", "L71b", "L32a", "L32b"
+                    ];
                     
-                    const esLevanteA = prefijosLevante.some(l => lineaA.toUpperCase().includes(l));
-                    const esLevanteB = prefijosLevante.some(l => lineaB.toUpperCase().includes(l));
-
-                    if (esLevanteA && esLevanteB) return true;
-
+                    const pertenecePonienteA = poniente.some(p => lineaA.includes(p));
+                    const pertenecePonienteB = poniente.some(p => lineaB.includes(p));
+                    if (pertenecePonienteA && pertenecePonienteB) return true;
+                    
+                    // ZONA MAÓ Y LEVANTE
+                    const levante = [
+                        "Zona Maó y Levante", "L02a", "L02b", "L03a", "L03b", 
+                        "L21a", "L21b", "L22a", "L22b", "L31a", "L31b", 
+                        "L08a", "L08b", "L91a", "L91b", "L92a", "L92b", "L93a", "L93b"
+                    ];
+                    const perteneceLevanteA = levante.some(l => lineaA.includes(l));
+                    const perteneceLevanteB = levante.some(l => lineaB.includes(l));
+                    if (perteneceLevanteA && perteneceLevanteB) return true;
+                    
                     return false;
                 },
 
@@ -1148,6 +1249,14 @@
                 confirmarCierreResumen() {
                     this.registrarActividad();
                     this.mostrarModalResumen = false;
+
+                    // Intercambio automático de canal a/b
+                    if (this.miLinea.includes('a (')) {
+                        this.miLinea = this.miLinea.replace('a (', 'b (');
+                    } else if (this.miLinea.includes('b (')) {
+                        this.miLinea = this.miLinea.replace('b (', 'a (');
+                    }
+
                     this.misParadasArray = this.misParadasArray.slice().reverse();
                     this.miUbicacion = this.misParadasArray[0];
                     this.evaluarSentidoIda();
@@ -1159,6 +1268,7 @@
                     this.ultimoTiempoParadoCongelado = 0;
                     this.inicioParadaTimestamp = Date.now();
                     this.mostrarAvisoApagarRadio = false;
+                    this.avisoDescartadoManualEstado = false;
 
                     if ("vibrate" in navigator) navigator.vibrate(50);
                     this.actualizarMiEstadoBD();
@@ -1166,29 +1276,24 @@
 
                 cambiarServicioGaldana(lineaDestino) {
                     this.registrarActividad();
-                    const busAnterior = this.miBus;
 
-                    if (lineaDestino === 'L51') {
-                        this.miBus = "L51";
-                        this.miLinea = "L51 (Galdana - Maó)";
-                        this.miLineaInput = "L51 (Galdana - Maó)";
+                    if (lineaDestino === 'L51b') {
+                        this.miBus = "L51b";
+                        this.miLinea = "L51b (Galdana ➔ Maó)";
+                        this.miLineaInput = "L51b (Galdana ➔ Maó)";
                         this.misParadasArray = ["Galdana", "C. Mitjana", "Camping", "Cementerio", "Ferr", "Mer", "Alaior C.", "Alaior P.", "Argen", "Maó"];
-                    } else if (lineaDestino === 'L52') {
-                        this.miBus = "L52";
-                        this.miLinea = "L52 (Galdana - Ciu)";
-                        this.miLineaInput = "L52 (Galdana - Ciu)";
+                    } else if (lineaDestino === 'L52b') {
+                        this.miBus = "L52b";
+                        this.miLinea = "L52b (Galdana ➔ Ciu)";
+                        this.miLineaInput = "L52b (Galdana ➔ Ciu)";
                         this.misParadasArray = ["Galdana", "C. Mitjana", "Camping", "Cementerio", "Ferr", "Ciu"];
-                    } else if (lineaDestino === 'L53') {
-                        this.miBus = "L53";
-                        this.miLinea = "L53 (Galdana - Ferr)";
-                        this.miLineaInput = "L53 (Galdana - Ferr)";
+                    } else if (lineaDestino === 'L53b') {
+                        this.miBus = "L53b";
+                        this.miLinea = "L53b (Galdana ➔ Ferr)";
+                        this.miLineaInput = "L53b (Galdana ➔ Ferr)";
                         this.misParadasArray = ["Galdana", "C. Mitjana", "Camping", "Cementerio", "Ferr"];
                     }
                     
-                    if (busAnterior && busAnterior !== this.miBus) {
-                        db.collection("bustalk_buses").doc(busAnterior).delete().catch(console.error);
-                    }
-
                     idb.set('bustalk_bus', this.miBus);
                     idb.set('bustalk_linea', this.miLinea);
                     this.miUbicacion = "Galdana";
@@ -1203,6 +1308,7 @@
                     this.ultimoTiempoParadoCongelado = 0;
                     this.inicioParadaTimestamp = Date.now();
                     this.mostrarAvisoApagarRadio = false;
+                    this.avisoDescartadoManualEstado = false;
 
                     if ("vibrate" in navigator) navigator.vibrate(50);
                     this.reiniciarEscuchasFirebase();
@@ -1211,24 +1317,19 @@
 
                 cambiarServicioTomas(lineaDestino) {
                     this.registrarActividad();
-                    const busAnterior = this.miBus;
 
-                    if (lineaDestino === 'L71') {
-                        this.miBus = "L71";
-                        this.miLinea = "L71 (S. Tomàs - Maó)";
-                        this.miLineaInput = "L71 (S. Tomàs - Maó)";
+                    if (lineaDestino === 'L71b') {
+                        this.miBus = "L71b";
+                        this.miLinea = "L71b (S. Tomàs ➔ Maó)";
+                        this.miLineaInput = "L71b (S. Tomàs ➔ Maó)";
                         this.misParadasArray = ["S. Tomàs 1ª", "S. Tomàs 2ª", "S. Tomàs 3ª", "Migjorn", "Alaior C.", "Alaior P.", "Argen", "Maó"];
-                    } else if (lineaDestino === 'L72') {
-                        this.miBus = "L72";
-                        this.miLinea = "L72 (S. Tomàs - Ciu)";
-                        this.miLineaInput = "L72 (S. Tomàs - Ciu)";
+                    } else if (lineaDestino === 'L72b') {
+                        this.miBus = "L72b";
+                        this.miLinea = "L72b (S. Tomàs ➔ Ciu)";
+                        this.miLineaInput = "L72b (S. Tomàs ➔ Ciu)";
                         this.misParadasArray = ["S. Tomàs 1ª", "S. Tomàs 2ª", "S. Tomàs 3ª", "Migjorn", "Mer", "Ferr", "Ciu"];
                     }
                     
-                    if (busAnterior && busAnterior !== this.miBus) {
-                        db.collection("bustalk_buses").doc(busAnterior).delete().catch(console.error);
-                    }
-
                     idb.set('bustalk_bus', this.miBus);
                     idb.set('bustalk_linea', this.miLinea);
                     this.miUbicacion = "S. Tomàs 1ª";
@@ -1243,6 +1344,7 @@
                     this.ultimoTiempoParadoCongelado = 0;
                     this.inicioParadaTimestamp = Date.now();
                     this.mostrarAvisoApagarRadio = false;
+                    this.avisoDescartadoManualEstado = false;
 
                     if ("vibrate" in navigator) navigator.vibrate(50);
                     this.reiniciarEscuchasFirebase();
@@ -1308,7 +1410,7 @@
                         return; 
                     }
                     if (!busNormalizado.startsWith('L') && busNormalizado !== 'ESCOLAR' && busNormalizado !== 'DISCRECIONAL') {
-                        alert("⚠️ Atención: Debes incluir la letra 'L' en el número de servicio (Ejemplo: L01, L02, L03, L08, L21, L22, L31, L91, L92, L93).");
+                        alert("⚠️ Atención: Debes incluir la letra 'L' en el número de servicio (Ejemplo: L01a, L01b, L02a, L08a, L21a, L52a).");
                         return;
                     }
                     if (!this.miLineaInput || this.miLineaInput.trim() === '') { 
@@ -1407,6 +1509,7 @@
                     this.ultimoAvisoParadaSegs = 0;
                     this.inicioParadaTimestamp = Date.now();
                     this.mostrarAvisoApagarRadio = false;
+                    this.avisoDescartadoManualEstado = false;
                     this.verificarFinalRuta();
                     this.actualizarMiEstadoBD();
                     
@@ -1421,6 +1524,7 @@
                     if (this.enParada) {
                         this.enParada = false;
                         this.mostrarAvisoApagarRadio = false;
+                        this.avisoDescartadoManualEstado = false;
                         this.mostrarAvisoFinalRuta = false;
                         
                         this.ultimoTiempoParadoCongelado = this.segundosEnParadaActual;
@@ -1450,6 +1554,7 @@
                         this.segundosEnParadaActual = 0;
                         this.ultimoAvisoParadaSegs = 0;
                         this.inicioParadaTimestamp = Date.now();
+                        this.avisoDescartadoManualEstado = false;
                         
                         if (idx !== -1 && idx < this.misParadasArray.length - 1) {
                             this.miUbicacion = this.misParadasArray[idx + 1];
